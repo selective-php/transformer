@@ -1,6 +1,6 @@
 # selective/transformer
 
-A strictly typed array transformer with an easy and fluent api.
+A strictly typed array transformer with dot access and fluent interface.
 The mapped result can be used for JSON responses and many other things.
 
 [![Latest Version on Packagist](https://img.shields.io/github/release/selective-php/transformer.svg)](https://packagist.org/packages/selective/transformer)
