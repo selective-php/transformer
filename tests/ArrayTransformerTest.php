@@ -56,6 +56,8 @@ class ArrayTransformerTest extends TestCase
      */
     public function testSystemTimeZone()
     {
+        $this->assertSame('Europe/Berlin', date_default_timezone_get());
+
         // Standard
         $date = new DateTimeImmutable('2021-01-01 00:00:00', new DateTimeZone('Asia/Tokyo'));
         $this->assertSame('2021-01-01 00:00:00', $date->format('Y-m-d H:i:s'));
