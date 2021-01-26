@@ -234,7 +234,7 @@ $transformer->map('destination', 'source', 'sprintf');
 
 // or
 
-$transformer->map('destination', 'source', $transformer->rule()->filter('sprintf'));
+$transformer->map('destination', 'source', $transformer->rule()->filter('sprintf', 'Count: %d'));
 ```
 
 You can also implement and register your own filter classes as well.

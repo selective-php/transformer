@@ -10,7 +10,8 @@
         "dot",
         "dot-access",
         "typed",
-        "array"
+        "array",
+        "json"
     ],
     "homepage": "https://github.com/selective-php/transformer",
     "license": "MIT",
