@@ -242,10 +242,6 @@ $transformer = new ArrayTransformer();
 $transformer->registerFilter('sprintf', SprintfFilter::class);
 
 // Usage
-$transformer->map('destination', 'source', 'sprintf');
-
-// or
-
 $transformer->map('destination', 'source', $transformer->rule()->filter('sprintf', 'Count: %d'));
 ```
 
