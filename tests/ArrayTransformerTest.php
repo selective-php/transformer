@@ -3,6 +3,7 @@
 namespace Selective\Transformer\Test;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Selective\Transformer\ArrayTransformer;
@@ -95,12 +96,6 @@ class ArrayTransformerTest extends TestCase
             ->map('nada', 'nada')
             ->map('first_name', 'first_name', $transformer->rule()->string()->required())
             ->map('last_name', 'last_name', $transformer->rule()->string())
-            ->map('date_of_birth', 'date_of_birth', $transformer->rule()->date('Y-m-d'))
-            ->map(
-                'transaction_date',
-                'transaction_date',
-                $transformer->rule()->date('Y-m-d\TH:i:s.u0P')
-            )
             ->map('user_role_id', 'user_role_id', $transformer->rule()->integer())
             ->map('amount', 'amount', $transformer->rule()->float())
             ->map('amount2', 'amount', $transformer->rule()->number(2)->float())
@@ -132,8 +127,6 @@ class ArrayTransformerTest extends TestCase
             'password' => '12345678',
             'email' => 'mail@example.com',
             'first_name' => 'Sally',
-            'date_of_birth' => '1982-01-01',
-            'transaction_date' => '2021-01-24T15:45:30.0000000+01:00',
             'user_role_id' => 2,
             'amount' => 3.14159,
             'amount2' => 3.14,
@@ -147,6 +140,66 @@ class ArrayTransformerTest extends TestCase
         ];
 
         $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testDateTimeFilter(): void
+    {
+        $transformer = new ArrayTransformer();
+
+        $transformer->map('ymd', 'date', $transformer->rule()->date())
+            ->map('atom', 'date', $transformer->rule()->date(DateTimeInterface::ATOM));
+
+        $actual = $transformer->toArray(
+            [
+                'date' => '2021-01-01 00:00:00',
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'ymd' => '2021-01-01 00:00:00',
+                'atom' => '2021-01-01T00:00:00+01:00',
+            ],
+            $actual
+        );
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testDateTimeWithTimeZoneFilter(): void
+    {
+        // Works only with UTC
+        $defaultZone = date_default_timezone_get();
+        date_default_timezone_set('UTC');
+
+        $transformer = new ArrayTransformer();
+
+        $transformer->map('ymd', 'date', $transformer->rule()->date())
+            ->map('atom', 'date', $transformer->rule()->date(DateTimeInterface::ATOM));
+
+        $actual = $transformer->toArray(
+            [
+                'date' => '2021-01-01 00:00:00',
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'ymd' => '2021-01-01 00:00:00',
+                'atom' => '2021-01-01T00:00:00+00:00',
+            ],
+            $actual
+        );
+
+        date_default_timezone_set($defaultZone);
     }
 
     /**
