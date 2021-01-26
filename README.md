@@ -129,7 +129,7 @@ Because `lastName` is blank but required the result looks like this:
 
 ## Filter
 
-Most basic datatypes and date time rules are already available.
+Most filters are directly available as rule method.
 
 ```php
 // Cast value to string, convert blank to null
@@ -230,6 +230,10 @@ $transformer = new ArrayTransformer();
 $transformer->registerFilter('sprintf', SprintfFilter::class);
 
 // Usage
+$transformer->map('destination', 'source', 'sprintf');
+
+// or
+
 $transformer->map('destination', 'source', $transformer->rule()->filter('sprintf'));
 ```
 
