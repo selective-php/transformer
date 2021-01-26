@@ -63,7 +63,7 @@ class ArrayTransformerTest extends TestCase
             'first_name' => 'Sally',
             'last_name' => '',
             'date_of_birth' => '1982-01-01 15:45:30',
-            'created_at' => new DateTimeImmutable('2021-01-24 00:00:00'),
+            'transaction_date' => new DateTimeImmutable('2021-01-24 15:45:30'),
             'user_role_id' => '2',
             'amount' => 3.14159,
             'number' => 3.14159,
@@ -95,10 +95,15 @@ class ArrayTransformerTest extends TestCase
             ->map('first_name', 'first_name', $transformer->rule()->string()->required())
             ->map('last_name', 'last_name', $transformer->rule()->string())
             ->map('date_of_birth', 'date_of_birth', $transformer->rule()->date('Y-m-d'))
-            ->map('created_at', 'created_at', $transformer->rule()->date('Y-m-d\TH:i:s.u0P', new DateTimeZone('+01:00')))
+            ->map(
+                'transaction_date',
+                'transaction_date',
+                $transformer->rule()->date('Y-m-d\TH:i:s.u0P', new DateTimeZone('+01:00'))
+            )
             ->map('user_role_id', 'user_role_id', $transformer->rule()->integer())
             ->map('amount', 'amount', $transformer->rule()->float())
             ->map('amount2', 'amount', $transformer->rule()->number(2)->float())
+            ->map('amount3', 'amount', $transformer->rule()->filter('sprintf', "%02.3f")->string())
             ->map('comment', 'comment', $transformer->rule()->filter('trim'))
             ->map('enabled', 'enabled', $transformer->rule()->boolean())
             ->map('items', 'items', $transformer->rule()->array()->required()->default([]))
@@ -127,10 +132,11 @@ class ArrayTransformerTest extends TestCase
             'email' => 'mail@example.com',
             'first_name' => 'Sally',
             'date_of_birth' => '1982-01-01',
-            'created_at' => '2021-01-24T00:00:00.0000000+01:00',
+            'transaction_date' => '2021-01-24T15:45:30.0000000+01:00',
             'user_role_id' => 2,
             'amount' => 3.14159,
             'amount2' => 3.14,
+            'amount3' => '3.142',
             'comment' => 'Test',
             'enabled' => true,
             'items' => [],
