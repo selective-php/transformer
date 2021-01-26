@@ -152,11 +152,13 @@ class ArrayTransformerTest extends TestCase
         $transformer = new ArrayTransformer();
 
         $transformer->map('datetime', 'date', $transformer->rule()->date())
-            ->map('date', 'date', $transformer->rule()->date('Y-m-d'));
+            ->map('date', 'date', $transformer->rule()->date('Y-m-d'))
+            ->map('date2', 'date2', $transformer->rule()->date());
 
         $actual = $transformer->toArray(
             [
                 'date' => '2021-01-01 00:00:00',
+                'date2' => new DateTimeImmutable('2021-01-01 00:00:00'),
             ]
         );
 
@@ -164,6 +166,7 @@ class ArrayTransformerTest extends TestCase
             [
                 'datetime' => '2021-01-01 00:00:00',
                 'date' => '2021-01-01',
+                'date2' => '2021-01-01 00:00:00',
             ],
             $actual
         );
