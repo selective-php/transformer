@@ -28,19 +28,19 @@ final class DateTimeFilter
         try {
             $format = $format ?? 'Y-m-d H:i:s';
 
-            if (is_string($value)) {
-                return (string)(new DateTimeImmutable($value, $timezone))->format($format);
-            }
-
             if ($value instanceof DateTimeImmutable) {
                 if ($timezone) {
-                    $value = $value->setTimezone($timezone);
+                    // This would only with only work with UTC as default time zone.
+                    // https://3v4l.org/YlGWY
+                    throw new ArrayTransformerException(
+                        'Changing the DateTimeZone of an existing DateTimeImmutable object is not supported.'
+                    );
                 }
 
                 return (string)$value->format($format);
             }
 
-            return null;
+            return (new DateTimeImmutable($value, $timezone))->format($format);
         } catch (Exception $exception) {
             throw new ArrayTransformerException($exception->getMessage(), $exception->getCode(), $exception);
         }

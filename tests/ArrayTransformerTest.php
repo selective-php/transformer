@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Selective\Transformer\ArrayTransformer;
+use Selective\Transformer\Exceptions\ArrayTransformerException;
 use Selective\Transformer\Filter\SprintfFilter;
 
 /**
@@ -47,27 +48,6 @@ class ArrayTransformerTest extends TestCase
         ];
 
         $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * Test.
-     *
-     * @return void
-     */
-    public function testSystemTimeZone()
-    {
-        $this->assertSame('Europe/Berlin', date_default_timezone_get());
-
-        // Standard
-        $date = new DateTimeImmutable('2021-01-01 00:00:00', new DateTimeZone('Asia/Tokyo'));
-        $this->assertSame('2021-01-01 00:00:00', $date->format('Y-m-d H:i:s'));
-
-        // With setTimezone
-        $date = new DateTimeImmutable('2021-01-02 00:00:00');
-        $date = $date->setTimezone(new DateTimeZone('Asia/Tokyo'));
-
-        $this->assertSame('Asia/Tokyo', $date->getTimezone()->getName());
-        $this->assertSame('2021-01-02 08:00:00', $date->format('Y-m-d H:i:s'));
     }
 
     /**
@@ -119,7 +99,7 @@ class ArrayTransformerTest extends TestCase
             ->map(
                 'transaction_date',
                 'transaction_date',
-                $transformer->rule()->date('Y-m-d\TH:i:s.u0P', new DateTimeZone('+01:00'))
+                $transformer->rule()->date('Y-m-d\TH:i:s.u0P')
             )
             ->map('user_role_id', 'user_role_id', $transformer->rule()->integer())
             ->map('amount', 'amount', $transformer->rule()->float())
@@ -167,5 +147,72 @@ class ArrayTransformerTest extends TestCase
         ];
 
         $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testDateTimParserError(): void
+    {
+        $this->expectException(ArrayTransformerException::class);
+        $this->expectErrorMessageMatches('/Failed to parse time string/');
+
+        $transformer = new ArrayTransformer();
+        $transformer->map('date', 'date', $transformer->rule()->date('Y-m-d'));
+
+        $transformer->toArray(
+            [
+                'date' => '2021-01-',
+            ]
+        );
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testDateTimeDateTimeZoneException(): void
+    {
+        $this->expectException(ArrayTransformerException::class);
+        $this->expectErrorMessage(
+            'Changing the DateTimeZone of an existing DateTimeImmutable object is not supported.'
+        );
+
+        $transformer = new ArrayTransformer();
+
+        $transformer->map(
+            'date',
+            'date',
+            $transformer->rule()->date('Y-m-d\TH:i:s.u0P', new DateTimeZone('+01:00'))
+        );
+
+        $transformer->toArray(
+            [
+                'date' => new DateTimeImmutable('2021-01-24 15:45:30'),
+            ]
+        );
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testUndefinedFilterException(): void
+    {
+        $this->expectException(ArrayTransformerException::class);
+        $this->expectErrorMessage('Filter not found: foo');
+
+        $transformer = new ArrayTransformer();
+        $transformer->map('field', 'field', $transformer->rule()->filter('foo'));
+
+        $transformer->toArray(
+            [
+                'field' => 'value',
+            ]
+        );
     }
 }
