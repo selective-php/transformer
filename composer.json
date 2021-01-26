@@ -3,12 +3,14 @@
     "type": "library",
     "description": "A strictly typed array reader",
     "keywords": [
-        "array",
-        "reader",
-        "strict",
-        "strictly",
+        "transformer",
+        "mapper",
+        "hydator",
+        "converter",
+        "dot",
+        "dot-access",
         "typed",
-        "strong"
+        "array"
     ],
     "homepage": "https://github.com/selective-php/transformer",
     "license": "MIT",
