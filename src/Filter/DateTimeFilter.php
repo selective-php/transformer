@@ -34,7 +34,7 @@ final class DateTimeFilter
 
             if ($value instanceof DateTimeImmutable) {
                 if ($timezone) {
-                    $value->setTimezone($timezone);
+                    $value = $value->setTimezone($timezone);
                 }
 
                 return (string)$value->format($format);
