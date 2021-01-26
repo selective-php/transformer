@@ -151,8 +151,8 @@ class ArrayTransformerTest extends TestCase
     {
         $transformer = new ArrayTransformer();
 
-        $transformer->map('ymd', 'date', $transformer->rule()->date())
-            ->map('atom', 'date', $transformer->rule()->date(DateTimeInterface::ATOM));
+        $transformer->map('datetime', 'date', $transformer->rule()->date())
+            ->map('date', 'date', $transformer->rule()->date('Y-m-d'));
 
         $actual = $transformer->toArray(
             [
@@ -162,8 +162,8 @@ class ArrayTransformerTest extends TestCase
 
         $this->assertSame(
             [
-                'ymd' => '2021-01-01 00:00:00',
-                'atom' => '2021-01-01T00:00:00+01:00',
+                'datetime' => '2021-01-01 00:00:00',
+                'date' => '2021-01-01',
             ],
             $actual
         );
@@ -174,7 +174,7 @@ class ArrayTransformerTest extends TestCase
      *
      * @return void
      */
-    public function testDateTimeWithTimeZoneFilter(): void
+    public function testDateTimeFilterAndTimeZone(): void
     {
         // Works only with UTC
         $defaultZone = date_default_timezone_get();
