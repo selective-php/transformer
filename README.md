@@ -180,20 +180,32 @@ $transformer = new ArrayTransformer();
 // Add a trim filter using the native trim function
 $transformer->registerFilter('trim', 'trim');
 
-// Add a custom filter using a callback
+// Usage
+$transformer->map('destination', 'source', 'trim');
+
+// or
+
+$transformer->map('destination', 'source', $transformer->rule()->filter('trim'));
+```
+
+Add a custom filter using a callback:
+
+```php
+$transformer = new ArrayTransformer();
+
 $transformer->registerFilter(
     'custom1',
     function ($value) {
-        return '  Custom1 value: ' . $value;
+        return 'Custom value: ' . $value;
     }
 );
 
 // Usage
-$transformer->map(
-    'destination',
-    'source',
-    $transformer->rule()->filter('trim')
-);
+$transformer->map('destination', 'source', 'custom1');
+
+// or
+
+$transformer->map('destination', 'source', $transformer->rule()->filter('custom1'));
 
 // It is possible to chain multiple filters
 $transformer->map(
