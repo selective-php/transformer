@@ -1,7 +1,7 @@
 {
     "name": "selective/transformer",
     "type": "library",
-    "description": "A strictly typed array transformer",
+    "description": "A strictly typed array transformer with dot-access, fluent interface and filters.",
     "keywords": [
         "transformer",
         "mapper",
