@@ -103,7 +103,7 @@ class ArrayTransformerTest extends TestCase
             ->map('user_role_id', 'user_role_id', $transformer->rule()->integer())
             ->map('amount', 'amount', $transformer->rule()->float())
             ->map('amount2', 'amount', $transformer->rule()->number(2)->float())
-            ->map('amount3', 'amount', $transformer->rule()->filter('sprintf', "%02.3f")->string())
+            ->map('amount3', 'amount', $transformer->rule()->filter('sprintf', '%02.3f')->string())
             ->map('comment', 'comment', $transformer->rule()->filter('trim'))
             ->map('enabled', 'enabled', $transformer->rule()->boolean())
             ->map('items', 'items', $transformer->rule()->array()->required()->default([]))
