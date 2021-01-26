@@ -2,8 +2,11 @@
 
 namespace Selective\Transformer\Test;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Selective\Transformer\ArrayTransformer;
+use Selective\Transformer\Filter\SprintfFilter;
 
 /**
  * Test.
@@ -15,7 +18,7 @@ class ArrayTransformerTest extends TestCase
      *
      * @return void
      */
-    public function test(): void
+    public function testSimpleStringMapping(): void
     {
         $data = [
             'username' => 'admin',
@@ -51,7 +54,7 @@ class ArrayTransformerTest extends TestCase
      *
      * @return void
      */
-    public function test2(): void
+    public function testComplexMapping(): void
     {
         $data = [
             'username' => 'admin',
@@ -60,9 +63,13 @@ class ArrayTransformerTest extends TestCase
             'first_name' => 'Sally',
             'last_name' => '',
             'date_of_birth' => '1982-01-01 15:45:30',
+            'created_at' => new DateTimeImmutable('2021-01-24 00:00:00'),
             'user_role_id' => '2',
+            'amount' => 3.14159,
+            'number' => 3.14159,
             'locale' => 'de_DE',
             'enabled' => 1,
+            'comment' => ' Test ',
             'sub1' => [
                 'sub2' => 'sub2value',
             ],
@@ -71,6 +78,9 @@ class ArrayTransformerTest extends TestCase
         $transformer = new ArrayTransformer();
 
         $transformer->registerFilter('trim', 'trim');
+
+        $transformer->registerFilter('sprintf', SprintfFilter::class);
+
         $transformer->registerFilter(
             'custom1',
             function ($value) {
@@ -85,7 +95,11 @@ class ArrayTransformerTest extends TestCase
             ->map('first_name', 'first_name', $transformer->rule()->string()->required())
             ->map('last_name', 'last_name', $transformer->rule()->string())
             ->map('date_of_birth', 'date_of_birth', $transformer->rule()->date('Y-m-d'))
+            ->map('created_at', 'created_at', $transformer->rule()->date('Y-m-d\TH:i:s.u0P', new DateTimeZone('+01:00')))
             ->map('user_role_id', 'user_role_id', $transformer->rule()->integer())
+            ->map('amount', 'amount', $transformer->rule()->float())
+            ->map('amount2', 'amount', $transformer->rule()->number(2)->float())
+            ->map('comment', 'comment', $transformer->rule()->filter('trim'))
             ->map('enabled', 'enabled', $transformer->rule()->boolean())
             ->map('items', 'items', $transformer->rule()->array()->required()->default([]))
             ->map('from-sub2', 'sub1.sub2')
@@ -105,7 +119,7 @@ class ArrayTransformerTest extends TestCase
             );
 
         $actual = $transformer->toArray($data);
-        //$actual = $transformer->transformArrays($data);
+        //$actual = $transformer->toArrays($data);
 
         $expected = [
             'username' => 'admin',
@@ -113,7 +127,11 @@ class ArrayTransformerTest extends TestCase
             'email' => 'mail@example.com',
             'first_name' => 'Sally',
             'date_of_birth' => '1982-01-01',
+            'created_at' => '2021-01-24T00:00:00.0000000+01:00',
             'user_role_id' => 2,
+            'amount' => 3.14159,
+            'amount2' => 3.14,
+            'comment' => 'Test',
             'enabled' => true,
             'items' => [],
             'from-sub2' => 'sub2value',

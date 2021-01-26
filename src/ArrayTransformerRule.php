@@ -130,9 +130,9 @@ final class ArrayTransformerRule
         return $this->filter('integer');
     }
 
-    public function number(string $format): self
+    public function number(int $decimals = 0, string $decimalSeparator = '.', string $thousandsSeparator = ','): self
     {
-        return $this->filter('number', $format);
+        return $this->filter('number', $decimals, $decimalSeparator, $thousandsSeparator);
     }
 
     public function date(string $format = 'Y-m-d H:i:s', DateTimeZone $dateTimeZone = null): self

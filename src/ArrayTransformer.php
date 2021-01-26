@@ -10,6 +10,7 @@ use Selective\Transformer\Filter\CallbackFilter;
 use Selective\Transformer\Filter\DateTimeFilter;
 use Selective\Transformer\Filter\FloatFilter;
 use Selective\Transformer\Filter\IntegerFilter;
+use Selective\Transformer\Filter\NumberFormatFilter;
 use Selective\Transformer\Filter\StringFilter;
 
 final class ArrayTransformer
@@ -32,6 +33,7 @@ final class ArrayTransformer
         $this->registerFilter('boolean', BooleanFilter::class);
         $this->registerFilter('integer', IntegerFilter::class);
         $this->registerFilter('float', FloatFilter::class);
+        $this->registerFilter('number', NumberFormatFilter::class);
         $this->registerFilter('date', DateTimeFilter::class);
         $this->registerFilter('array', ArrayFilter::class);
         $this->registerFilter('callback', CallbackFilter::class);
