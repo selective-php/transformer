@@ -11,7 +11,7 @@ final class CallbackFilter
      * Invoke.
      *
      * @param mixed $value The value
-     * @param callable $callback
+     * @param callable $callback The callback
      *
      * @return mixed The value
      */

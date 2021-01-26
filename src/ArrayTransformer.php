@@ -13,6 +13,9 @@ use Selective\Transformer\Filter\IntegerFilter;
 use Selective\Transformer\Filter\NumberFormatFilter;
 use Selective\Transformer\Filter\StringFilter;
 
+/**
+ * Transformer.
+ */
 final class ArrayTransformer
 {
     /**
@@ -25,35 +28,52 @@ final class ArrayTransformer
      */
     private $converter;
 
+    /**
+     * @var string[]
+     */
+    private $internalFilters = [
+        'string' => StringFilter::class,
+        'blank-to-null' => BlankToNullFilter::class,
+        'boolean' => BooleanFilter::class,
+        'integer' => IntegerFilter::class,
+        'float' => FloatFilter::class,
+        'number' => NumberFormatFilter::class,
+        'date' => DateTimeFilter::class,
+        'array' => ArrayFilter::class,
+        'callback' => CallbackFilter::class,
+    ];
+
+    /**
+     * The constructor.
+     */
     public function __construct()
     {
         $this->converter = new ArrayValueConverter();
-        $this->registerFilter('string', StringFilter::class);
-        $this->registerFilter('blank-to-null', BlankToNullFilter::class);
-        $this->registerFilter('boolean', BooleanFilter::class);
-        $this->registerFilter('integer', IntegerFilter::class);
-        $this->registerFilter('float', FloatFilter::class);
-        $this->registerFilter('number', NumberFormatFilter::class);
-        $this->registerFilter('date', DateTimeFilter::class);
-        $this->registerFilter('array', ArrayFilter::class);
-        $this->registerFilter('callback', CallbackFilter::class);
+
+        foreach ($this->internalFilters as $name => $class) {
+            $this->registerFilter($name, new $class());
+        }
     }
 
     /**
-     * @param string $string
-     * @param callable|string $filter
-     */
-    public function registerFilter(string $string, $filter): void
-    {
-        $this->converter->registerFilter($string, $filter);
-    }
-
-    /**
-     * @param string $destination
-     * @param string $source
-     * @param ArrayTransformerRule|string|null $rule
+     * Register custom filter.
      *
-     * @return $this
+     * @param string $name The name
+     * @param callable $filter The filter callback
+     */
+    public function registerFilter(string $name, callable $filter): void
+    {
+        $this->converter->registerFilter($name, $filter);
+    }
+
+    /**
+     * Add mapping rule.
+     *
+     * @param string $destination The destination element
+     * @param string $source The source element
+     * @param ArrayTransformerRule|string|null $rule The rule
+     *
+     * @return $this The transformer
      */
     public function map(string $destination, string $source, $rule = null): self
     {
@@ -68,11 +88,23 @@ final class ArrayTransformer
         return $this;
     }
 
+    /**
+     * Create transformer rule.
+     *
+     * @return ArrayTransformerRule The rule
+     */
     public function rule(): ArrayTransformerRule
     {
         return new ArrayTransformerRule();
     }
 
+    /**
+     * Convert rule string to rule object.
+     *
+     * @param string $rules The rules, separated by '|'
+     *
+     * @return ArrayTransformerRule The rule object
+     */
     private function ruleFromString(string $rules): ArrayTransformerRule
     {
         $rule = $this->rule();
@@ -90,10 +122,12 @@ final class ArrayTransformer
     }
 
     /**
-     * @param array<mixed> $source
-     * @param array<mixed> $target
+     * Transform array to array.
      *
-     * @return array<mixed>
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
+     *
+     * @return array<mixed> The result
      */
     public function toArray(array $source, array $target = []): array
     {
@@ -105,7 +139,7 @@ final class ArrayTransformer
             $value = $this->converter->convert($value, $rule);
 
             if ($value === null && !$rule->isRequired()) {
-                // Don't add item to result
+                // Skip item
                 continue;
             }
 
@@ -113,5 +147,22 @@ final class ArrayTransformer
         }
 
         return $targetData->export();
+    }
+
+    /**
+     * Transform list of arrays to list of arrays.
+     *
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
+     *
+     * @return array<mixed> The result
+     */
+    public function toArrays(array $source, array $target = []): array
+    {
+        foreach ($source as $item) {
+            $target[] = $this->toArray($item);
+        }
+
+        return $target;
     }
 }

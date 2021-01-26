@@ -10,9 +10,9 @@ final class BooleanFilter
     /**
      * Invoke.
      *
-     * @param mixed $value
+     * @param mixed $value The value
      *
-     * @return mixed The value
+     * @return bool The value
      */
     public function __invoke($value)
     {

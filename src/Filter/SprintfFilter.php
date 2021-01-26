@@ -13,7 +13,7 @@ final class SprintfFilter
      * @param mixed $value The value
      * @param string $format The format
      *
-     * @return mixed The value
+     * @return string The value
      */
     public function __invoke($value, string $format)
     {

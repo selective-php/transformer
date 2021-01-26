@@ -10,9 +10,9 @@ final class BlankToNullFilter
     /**
      * Invoke.
      *
-     * @param mixed $value
+     * @param mixed $value The value
      *
-     * @return mixed The value
+     * @return string|null The value
      */
     public function __invoke($value)
     {

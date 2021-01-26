@@ -12,7 +12,7 @@ final class StringFilter
      *
      * @param mixed $value The value
      *
-     * @return mixed The value
+     * @return string The value
      */
     public function __invoke($value)
     {

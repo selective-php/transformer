@@ -10,9 +10,9 @@ final class IntegerFilter
     /**
      * Invoke.
      *
-     * @param mixed $value
+     * @param mixed $value The value
      *
-     * @return mixed The result
+     * @return int The result
      */
     public function __invoke($value)
     {

@@ -1,7 +1,7 @@
 # selective/transformer
 
-A strictly typed array transformer with dot access and fluent interface. 
-The mapped result can be used for JSON responses and many other things.
+A strictly typed array transformer with dot access and fluent interface. The mapped result can be used for JSON
+responses and many other things.
 
 [![Latest Version on Packagist](https://img.shields.io/github/release/selective-php/transformer.svg)](https://packagist.org/packages/selective/transformer)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
@@ -9,6 +9,21 @@ The mapped result can be used for JSON responses and many other things.
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/selective-php/transformer.svg)](https://scrutinizer-ci.com/g/selective-php/transformer/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/quality/g/selective-php/transformer.svg)](https://scrutinizer-ci.com/g/selective-php/transformer/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/selective/transformer.svg)](https://packagist.org/packages/selective/transformer/stats)
+
+## Table of Contents
+
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+    * [Transforming](#transforming)
+    * [Transforming list of arrays](#transforming-list-of-arrays)
+* [Dot access](#dot-access)
+* [Mapping rules](#mapping-rules)
+    * [Simple mapping rules](#simple-mapping-rules)
+    * [Complex mapping rules](#complex-mapping-rules)
+* [Filter](#filter)
+    * [Custom Filter](#custom-filter)
+* [License](#license)
 
 ## Requirements
 
@@ -22,6 +37,8 @@ composer require selective/transformer
 
 ## Usage
 
+### Transforming
+
 Sample data:
 
 ```php
@@ -31,8 +48,6 @@ $data = [
     'email' => 'sally@example.com',
 ];
 ```
-
-### Minimal example
 
 ```php
 <?php
@@ -57,10 +72,65 @@ The result:
 ];
 ```
 
-### Dot access
+### Transforming list of arrays
 
-You can copy any data from the source array to any sub-element of the destination array
-using the dot-syntax.
+You can use a method "toArrays" to transform a list of arrays.
+
+This can be useful if you want to transform a resultset from a database query, or a response payload from an API.
+
+**Example:**
+
+```php
+$transformer = new ArrayTransformer();
+
+$transformer->map('id', 'id', $transformer->rule()->integer())
+    ->map('first_name', 'first_name', $transformer->rule()->string())
+    ->map('last_name', 'last_name', $transformer->rule()->string())
+    ->map('phone', 'phone', $transformer->rule()->string())
+    ->map('enabled', 'enabled', $transformer->rule()->boolean());
+
+$rows = [];
+$rows[] = [
+    'id' => '100',
+    'first_name' => 'Sally',
+    'last_name' => '',
+    'phone' => null,
+    'enabled' => '1',
+];
+
+$rows[] = [
+    'id' => '101',
+    'first_name' => 'Max',
+    'last_name' => 'Doe',
+    'phone' => '+123456789',
+    'enabled' => '0',
+];
+
+$result = $transformer->toArrays($rows);
+```
+
+The result:
+
+```php
+[
+    [
+        'id' => 100,
+        'first_name' => 'Sally',
+        'enabled' => true,
+    ],
+    [
+        'id' => 101,
+        'first_name' => 'Max',
+        'last_name' => 'Doe',
+        'phone' => '+123456789',
+        'enabled' => false,
+    ],
+]
+```
+
+## Dot access
+
+You can copy any data from the source array to any sub-element of the destination array using the dot-syntax.
 
 ```php
 <?php
@@ -69,6 +139,8 @@ $transformer->map('firstName', 'address.first_name')
     ->map('lastName', 'address.last_name')
     ->map('invoice.items', 'root.sub1.sub2.items');
 ```
+
+## Mapping Rules
 
 ### Simple mapping rules
 
@@ -170,7 +242,7 @@ $transformer->rule()->callback(
 );
 ```
 
-## Custom filters
+### Custom Filter
 
 You can also add your own custom filter:
 

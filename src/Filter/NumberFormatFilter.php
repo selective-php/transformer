@@ -11,11 +11,11 @@ final class NumberFormatFilter
      * Invoke.
      *
      * @param mixed $value The value
-     * @param int $decimals
-     * @param string $decimalSeparator
-     * @param string $thousandsSeparator
+     * @param int $decimals The decimals
+     * @param string $decimalSeparator The decimal separator
+     * @param string $thousandsSeparator The thousand separator
      *
-     * @return mixed The value
+     * @return string The value
      */
     public function __invoke(
         $value,

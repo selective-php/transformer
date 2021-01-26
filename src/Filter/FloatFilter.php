@@ -10,9 +10,9 @@ final class FloatFilter
     /**
      * Invoke.
      *
-     * @param mixed $value
+     * @param mixed $value The value
      *
-     * @return mixed The value
+     * @return float The value
      */
     public function __invoke($value)
     {

@@ -4,6 +4,9 @@ namespace Selective\Transformer;
 
 use Selective\Transformer\Exceptions\ArrayTransformerException;
 
+/**
+ * Converter.
+ */
 final class ArrayValueConverter
 {
     /**
@@ -12,35 +15,40 @@ final class ArrayValueConverter
     private $filters = [];
 
     /**
-     * @param mixed $value
-     * @param ArrayTransformerRule $rule
+     * Convert the values by the given filter rules.
      *
-     * @return mixed
+     * @param mixed $value The source value
+     * @param ArrayTransformerRule $rule The rule
+     *
+     * @return mixed The new value
      */
     public function convert($value, ArrayTransformerRule $rule)
     {
         if ($value === null) {
             return null;
         }
-        foreach ($rule->getFilters() as $filter) {
+
+        foreach ($rule->getFiltersItems() as $filter) {
             $name = $filter->getName();
 
             if (!isset($this->filters[$name])) {
                 throw new ArrayTransformerException(sprintf('Filter not found: %s', $name));
             }
 
-            $value = $this->invokeCallback($name, $value, $filter->getParams());
+            $value = $this->invokeCallback($name, $value, $filter->getArguments());
         }
 
         return $value;
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
-     * @param array<mixed> $parameters
+     * Invoke filter callback.
      *
-     * @return mixed
+     * @param string $name The filter name
+     * @param mixed $value The value for the filter
+     * @param array<mixed> $parameters The filter arguments (optional)
+     *
+     * @return mixed The filter result
      */
     private function invokeCallback(string $name, $value, array $parameters = [])
     {
@@ -54,15 +62,13 @@ final class ArrayValueConverter
     }
 
     /**
-     * @param string $name
-     * @param callable|string $callback
+     * Register a filter callback.
+     *
+     * @param string $name The filter name
+     * @param callable $callback The callback
      */
-    public function registerFilter(string $name, $callback): void
+    public function registerFilter(string $name, callable $callback): void
     {
-        if (is_string($callback) && class_exists($callback)) {
-            $callback = new $callback();
-        }
-
         $this->filters[$name] = $callback;
     }
 }

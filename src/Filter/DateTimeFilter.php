@@ -15,13 +15,13 @@ final class DateTimeFilter
     /**
      * Invoke.
      *
-     * @param mixed $value
-     * @param string|null $format
-     * @param DateTimeZone|null $timezone
+     * @param mixed $value The value
+     * @param string|null $format The date time format
+     * @param DateTimeZone|null $timezone The time zone
      *
-     * @throws Exception
+     * @throws ArrayTransformerException
      *
-     * @return mixed The value
+     * @return string The value
      */
     public function __invoke($value, string $format = null, DateTimeZone $timezone = null)
     {
@@ -29,20 +29,39 @@ final class DateTimeFilter
             $format = $format ?? 'Y-m-d H:i:s';
 
             if ($value instanceof DateTimeImmutable) {
-                if ($timezone) {
-                    // This would only with only work with UTC as default time zone.
-                    // https://3v4l.org/YlGWY
-                    throw new ArrayTransformerException(
-                        'Changing the DateTimeZone of an existing DateTimeImmutable object is not supported.'
-                    );
-                }
-
-                return (string)$value->format($format);
+                return $this->formatDateTime($value, $format, $timezone);
             }
 
-            return (new DateTimeImmutable($value, $timezone))->format($format);
+            return (string)(new DateTimeImmutable($value, $timezone))->format($format);
         } catch (Exception $exception) {
             throw new ArrayTransformerException($exception->getMessage(), $exception->getCode(), $exception);
         }
+    }
+
+    /**
+     * Format date time.
+     *
+     * @param DateTimeImmutable $value The date time
+     * @param string $format The format
+     * @param DateTimeZone|null $timezone The timezone
+     *
+     * @throws ArrayTransformerException
+     *
+     * @return string The result
+     */
+    private function formatDateTime(
+        DateTimeImmutable $value,
+        string $format,
+        DateTimeZone $timezone = null
+    ): string {
+        if ($timezone) {
+            // This would only with only work with UTC as default time zone.
+            // https://3v4l.org/YlGWY
+            throw new ArrayTransformerException(
+                'Changing the DateTimeZone of an existing DateTimeImmutable object is not supported.'
+            );
+        }
+
+        return (string)$value->format($format);
     }
 }
