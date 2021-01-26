@@ -54,6 +54,21 @@ class ArrayTransformerTest extends TestCase
      *
      * @return void
      */
+    public function testSystemTimZone()
+    {
+        $date = new DateTimeImmutable('2021-01-01 00:00:00');
+        $date = $date->setTimezone(new DateTimeZone('+01:00'));
+
+        $this->assertSame('+01:00', $date->getTimezone()->getName());
+        $this->assertSame('2021-01-01 00:00:00', $date->format('Y-m-d H:i:s'));
+        $this->assertSame('2021-01-01T00:00:00.0000000+01:00', $date->format('Y-m-d\TH:i:s.u0P'));
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
     public function testComplexMapping(): void
     {
         $data = [
