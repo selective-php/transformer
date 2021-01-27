@@ -39,6 +39,10 @@ composer require selective/transformer
 
 ### Transforming
 
+For the sake of simplicity, this example has been put together as though it was one file.
+In reality, you would spread the manager initiation, data collection and JSON conversion 
+into separate parts of your application.
+
 Sample data:
 
 ```php
@@ -74,7 +78,7 @@ The result:
 
 ### Transforming list of arrays
 
-You can use a method "toArrays" to transform a list of arrays.
+The method `toArrays` is able to transform a list of arrays.
 
 This can be useful if you want to transform a resultset from a database query, or a response payload from an API.
 
