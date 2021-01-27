@@ -4,7 +4,6 @@ namespace Selective\Transformer;
 
 use Dflydev\DotAccessData\Data;
 use Selective\Transformer\Filter\ArrayFilter;
-use Selective\Transformer\Filter\StringWithBlankFilter;
 use Selective\Transformer\Filter\BooleanFilter;
 use Selective\Transformer\Filter\CallbackFilter;
 use Selective\Transformer\Filter\DateTimeFilter;
@@ -12,6 +11,7 @@ use Selective\Transformer\Filter\FloatFilter;
 use Selective\Transformer\Filter\IntegerFilter;
 use Selective\Transformer\Filter\NumberFormatFilter;
 use Selective\Transformer\Filter\StringFilter;
+use Selective\Transformer\Filter\StringWithBlankFilter;
 
 /**
  * Transformer.
