@@ -5,17 +5,17 @@ namespace Selective\Transformer\Filter;
 /**
  * Filter.
  */
-final class BlankToNullFilter
+final class StringWithBlankFilter
 {
     /**
      * Invoke.
      *
      * @param mixed $value The value
      *
-     * @return string|null The value
+     * @return string The value
      */
     public function __invoke($value)
     {
-        return $value === '' ? null : (string)$value;
+        return (string)$value;
     }
 }

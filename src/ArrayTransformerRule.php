@@ -147,7 +147,7 @@ final class ArrayTransformerRule
      */
     public function string(bool $blankToNull = true): self
     {
-        $this->filter($blankToNull ? 'blank-to-null' : 'string');
+        $this->filter($blankToNull ? 'string' : 'string-with-blank');
 
         return $this;
     }

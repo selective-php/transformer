@@ -12,10 +12,10 @@ final class StringFilter
      *
      * @param mixed $value The value
      *
-     * @return string The value
+     * @return string|null The value
      */
     public function __invoke($value)
     {
-        return (string)$value;
+        return $value === '' ? null : (string)$value;
     }
 }

@@ -335,7 +335,7 @@ class ArrayTransformerTest extends TestCase
 
         $transformer->map('id', 'id', 'integer')
             ->map('first_name', 'first_name', 'string')
-            ->map('last_name', 'last_name', 'blank-to-null')
+            ->map('last_name', 'last_name', 'string')
             ->map('phone', 'phone', 'string')
             ->map('enabled', 'enabled', 'boolean');
 

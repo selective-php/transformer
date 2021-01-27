@@ -4,7 +4,7 @@ namespace Selective\Transformer;
 
 use Dflydev\DotAccessData\Data;
 use Selective\Transformer\Filter\ArrayFilter;
-use Selective\Transformer\Filter\BlankToNullFilter;
+use Selective\Transformer\Filter\StringWithBlankFilter;
 use Selective\Transformer\Filter\BooleanFilter;
 use Selective\Transformer\Filter\CallbackFilter;
 use Selective\Transformer\Filter\DateTimeFilter;
@@ -33,7 +33,7 @@ final class ArrayTransformer
      */
     private $internalFilters = [
         'string' => StringFilter::class,
-        'blank-to-null' => BlankToNullFilter::class,
+        'string-with-blank' => StringWithBlankFilter::class,
         'boolean' => BooleanFilter::class,
         'integer' => IntegerFilter::class,
         'float' => FloatFilter::class,
@@ -89,16 +89,6 @@ final class ArrayTransformer
     }
 
     /**
-     * Create transformer rule.
-     *
-     * @return ArrayTransformerRule The rule
-     */
-    public function rule(): ArrayTransformerRule
-    {
-        return new ArrayTransformerRule();
-    }
-
-    /**
      * Convert rule string to rule object.
      *
      * @param string $rules The rules, separated by '|'
@@ -119,6 +109,33 @@ final class ArrayTransformer
         }
 
         return $rule;
+    }
+
+    /**
+     * Create transformer rule.
+     *
+     * @return ArrayTransformerRule The rule
+     */
+    public function rule(): ArrayTransformerRule
+    {
+        return new ArrayTransformerRule();
+    }
+
+    /**
+     * Transform list of arrays to list of arrays.
+     *
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
+     *
+     * @return array<mixed> The result
+     */
+    public function toArrays(array $source, array $target = []): array
+    {
+        foreach ($source as $item) {
+            $target[] = $this->toArray($item);
+        }
+
+        return $target;
     }
 
     /**
@@ -147,22 +164,5 @@ final class ArrayTransformer
         }
 
         return $targetData->export();
-    }
-
-    /**
-     * Transform list of arrays to list of arrays.
-     *
-     * @param array<mixed> $source The source
-     * @param array<mixed> $target The target (optional)
-     *
-     * @return array<mixed> The result
-     */
-    public function toArrays(array $source, array $target = []): array
-    {
-        foreach ($source as $item) {
-            $target[] = $this->toArray($item);
-        }
-
-        return $target;
     }
 }
