@@ -141,13 +141,13 @@ final class ArrayTransformerRule
     /**
      * Add string filter.
      *
-     * @param bool $blankToNull Convert blank string to null (default)
+     * @param bool $allowBlank Convert blank to null by default. True allows the string to be blank.
      *
      * @return $this Self
      */
-    public function string(bool $blankToNull = true): self
+    public function string(bool $allowBlank = false): self
     {
-        $this->filter($blankToNull ? 'string' : 'string-with-blank');
+        $this->filter($allowBlank ? 'string-with-blank' : 'string');
 
         return $this;
     }
