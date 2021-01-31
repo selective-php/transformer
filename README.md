@@ -14,15 +14,15 @@ responses and many other things.
 
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Usage](#usage)
-    * [Transforming](#transforming)
-    * [Transforming list of arrays](#transforming-list-of-arrays)
+* [Introduction](#introduction)
+* [Transforming](#transforming)
+* [Transforming list of arrays](#transforming-list-of-arrays)
 * [Dot access](#dot-access)
 * [Mapping rules](#mapping-rules)
-    * [Simple mapping rules](#simple-mapping-rules)
-    * [Complex mapping rules](#complex-mapping-rules)
+  * [Simple mapping rules](#simple-mapping-rules)
+  * [Complex mapping rules](#complex-mapping-rules)
 * [Filter](#filter)
-    * [Custom Filter](#custom-filter)
+  * [Custom Filter](#custom-filter)
 * [JSON conversion](#json-conversion)  
 * [License](#license)
 
@@ -36,9 +36,30 @@ responses and many other things.
 composer require selective/transformer
 ```
 
-## Usage
+## Introduction
 
-### Transforming
+Converting complex data with simple PHP works by using a lot of type casting, `if` conditions
+and looping through the data with `foreach()`. This leads to very high 
+cyclomatic complexity and nesting depth, and thus poor "code rating".
+
+This Transformer component provides functionality to map, cast and loop array values
+from one array to another array.
+
+### Use Cases
+
+When building an API it is common for people to just grab stuff from the 
+database and pass it to `json_encode()`. 
+This might be passable for “trivial” APIs but if they are in use by the public, 
+or used by mobile applications then this will quickly lead to inconsistent output.
+The Transformer is able to create a “barrier” between source data and output,
+so schema changes do not affect users
+
+The Transformer works also very well to put any kind of **database resultset**
+(e.g. from PDO) into a new data structure.
+
+The uses cases are not limited.
+
+## Transforming
 
 For the sake of simplicity, this example has been put together as though it was one file.
 In reality, you would spread the manager initiation, data collection and JSON conversion 
@@ -77,7 +98,7 @@ The result:
 ];
 ```
 
-### Transforming list of arrays
+## Transforming list of arrays
 
 The method `toArrays` is able to transform a list of arrays.
 
