@@ -12,11 +12,14 @@ use Selective\Transformer\Filter\IntegerFilter;
 use Selective\Transformer\Filter\NumberFormatFilter;
 use Selective\Transformer\Filter\StringFilter;
 use Selective\Transformer\Filter\StringWithBlankFilter;
+use Selective\Transformer\Filter\TransformFilter;
+use Selective\Transformer\Filter\TransformListFilter;
+use Selective\Transformer\Interfaces\TransformerInterface;
 
 /**
  * Transformer.
  */
-final class ArrayTransformer
+final class ArrayTransformer implements TransformerInterface
 {
     /**
      * @var ArrayTransformerRule[]
@@ -41,6 +44,8 @@ final class ArrayTransformer
         'date' => DateTimeFilter::class,
         'array' => ArrayFilter::class,
         'callback' => CallbackFilter::class,
+        'transform' => TransformFilter::class,
+        'transform-list' => TransformListFilter::class,
     ];
 
     /**
@@ -122,23 +127,6 @@ final class ArrayTransformer
     }
 
     /**
-     * Transform list of arrays to list of arrays.
-     *
-     * @param array<mixed> $source The source
-     * @param array<mixed> $target The target (optional)
-     *
-     * @return array<mixed> The result
-     */
-    public function toArrays(array $source, array $target = []): array
-    {
-        foreach ($source as $item) {
-            $target[] = $this->toArray($item);
-        }
-
-        return $target;
-    }
-
-    /**
      * Transform array to array.
      *
      * @param array<mixed> $source The source
@@ -164,5 +152,22 @@ final class ArrayTransformer
         }
 
         return $targetData->export();
+    }
+
+    /**
+     * Transform list of arrays to list of arrays.
+     *
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
+     *
+     * @return array<mixed> The result
+     */
+    public function toArrays(array $source, array $target = []): array
+    {
+        foreach ($source as $item) {
+            $target[] = $this->toArray($item);
+        }
+
+        return $target;
     }
 }

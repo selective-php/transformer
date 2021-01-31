@@ -245,4 +245,28 @@ final class ArrayTransformerRule
     {
         return $this->filter('callback', $callback);
     }
+
+    /**
+     * Add transformer filter.
+     *
+     * @param callable $callback The callback
+     *
+     * @return $this Self
+     */
+    public function transform(callable $callback): self
+    {
+        return $this->filter('transform', $callback, new ArrayTransformer());
+    }
+
+    /**
+     * Add transformer list filter.
+     *
+     * @param callable $callback The callback
+     *
+     * @return $this Self
+     */
+    public function transformList(callable $callback): self
+    {
+        return $this->filter('transform-list', $callback, new ArrayTransformer());
+    }
 }

@@ -244,6 +244,24 @@ $transformer->rule()->callback(
         return 'My custom value: ' . $value;
     }
 );
+
+// Apply transformation to array item
+$transformer->rule()->transform(
+    function (ArrayTransformer $transformer) {
+        $transformer
+            ->map('id', 'id', 'integer')
+            ->map('first_name', 'first_name', 'string');
+    }
+);
+
+// Apply transformation to a list of arrays
+$transformer->rule()->transformList(
+    function (ArrayTransformer $transformer) {
+        $transformer
+            ->map('id', 'id', 'integer')
+            ->map('first_name', 'first_name', 'string');
+       }
+);
 ```
 
 ### Custom Filter
