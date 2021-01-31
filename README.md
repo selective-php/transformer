@@ -393,7 +393,7 @@ $response = $response->withHeader('Content-Type', 'application/json');
 // Write json string to the response body
 $response->getBody()->write($json);
 
-return $respnse;
+return $response;
 ```
 
 ## License
