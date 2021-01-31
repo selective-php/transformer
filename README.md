@@ -23,6 +23,7 @@ responses and many other things.
     * [Complex mapping rules](#complex-mapping-rules)
 * [Filter](#filter)
     * [Custom Filter](#custom-filter)
+* [JSON conversion](#json-conversion)  
 * [License](#license)
 
 ## Requirements
@@ -352,6 +353,27 @@ $transformer->map('destination', 'source', $transformer->rule()->filter('sprintf
 ```
 
 You can also implement and register your own filter classes as well.
+
+## JSON conversion
+
+You can use your own json component or just the native `json_encode` function.
+
+```php
+// Turn all of that into a JSON string
+$json = (string)json_encode($transformer->toArray($data));
+```
+
+Writing JSON to a PSR-7 response object:
+
+```php
+// Set correct header
+$response = $response->withHeader('Content-Type', 'application/json');
+
+// Write json string to the response body
+$response->getBody()->write($json);
+
+return $respnse;
+```
 
 ## License
 
