@@ -72,7 +72,7 @@ The result:
 ```php
 [
     'firstName' => 'Sally',
-    'email' => 'mail@example.com',
+    'email' => 'sally@example.com',
 ];
 ```
 
@@ -160,6 +160,12 @@ $transformer = new ArrayTransformer();
 $transformer->map('firstName', 'first_name', 'string|required')
     ->map('lastName', 'last_name', 'string|required')
     ->map('email', 'email', 'string|required');
+
+$data = [
+    'first_name' => 'Sally',
+    'last_name' => '',
+    'email' => 'sally@example.com',
+];
     
 $result = $transformer->toArray($data);
 ```
@@ -170,7 +176,7 @@ Because `lastName` is blank but required the result looks like this:
 [
     'firstName' => 'Sally',
     'lastName' => '',
-    'email' => 'mail@example.com',
+    'email' => 'sally@example.com',
 ];
 ```
 
@@ -189,7 +195,13 @@ $transformer = new ArrayTransformer();
 $transformer->map('firstName', 'first_name', $transformer->rule()->string()->required())
     ->map('lastName', 'last_name', $transformer->rule()->string()->required())
     ->map('email', 'email', $transformer->rule()->string()->required());
-    
+
+$data = [
+    'first_name' => 'Sally',
+    'last_name' => '',
+    'email' => 'sally@example.com',
+];
+
 $result = $transformer->toArray($data);
 ```
 
@@ -199,7 +211,7 @@ Because `lastName` is blank but required the result looks like this:
 [
     'firstName' => 'Sally',
     'lastName' => '',
-    'email' => 'mail@example.com',
+    'email' => 'sally@example.com',
 ];
 ```
 
