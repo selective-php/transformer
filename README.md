@@ -245,8 +245,8 @@ Most filters are directly available as rule method.
 // Cast value to string, convert blank to null
 $transformer->rule()->string();
 
-// Cast value to string, disable blank to null
-$transformer->rule()->string(false);
+// Cast value to string, allow blank string ''
+$transformer->rule()->string(true);
 
 // Cast value to int
 $transformer->rule()->integer();
