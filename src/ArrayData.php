@@ -4,8 +4,6 @@ namespace Selective\Transformer;
 
 use Selective\Transformer\Exceptions\ArrayDataException;
 
-use function explode;
-
 /**
  * Array data dot access.
  */
