@@ -19,11 +19,13 @@ responses and many other things.
 * [Transforming list of arrays](#transforming-list-of-arrays)
 * [Dot access](#dot-access)
 * [Mapping rules](#mapping-rules)
-  * [Simple mapping rules](#simple-mapping-rules)
-  * [Complex mapping rules](#complex-mapping-rules)
+    * [Simple mapping rules](#simple-mapping-rules)
+    * [Complex mapping rules](#complex-mapping-rules)
 * [Filter](#filter)
-  * [Custom Filter](#custom-filter)
-* [JSON conversion](#json-conversion)  
+    * [Custom Filter](#custom-filter)
+* [Examples](#examples)
+    * [JSON conversion](#json-conversion)
+    * [PDO resultset conversion](#pdo-resultset-conversion)
 * [License](#license)
 
 ## Requirements
@@ -38,21 +40,17 @@ composer require selective/transformer
 
 ## Introduction
 
-Converting complex data with simple PHP works by using a lot of type casting, `if` conditions
-and looping through the data with `foreach()`. This leads to very high 
-cyclomatic complexity and nesting depth, and thus poor "code rating".
+Converting complex data with simple PHP works by using a lot of type casting, `if` conditions and looping through the
+data with `foreach()`. This leads to very high cyclomatic complexity and nesting depth, and thus poor "code rating".
 
-This Transformer component provides functionality to map, cast and loop array values
-from one array to another array.
+This Transformer component provides functionality to map, cast and loop array values from one array to another array.
 
 ### Use Cases
 
-When building an API it is common for people to just grab stuff from the 
-database and pass it to `json_encode()`. 
-This might be passable for “trivial” APIs but if they are in use by the public, 
-or used by mobile applications then this will quickly lead to inconsistent output.
-The Transformer is able to create a “barrier” between source data and output,
-so schema changes do not affect users
+When building an API it is common for people to just grab stuff from the database and pass it to `json_encode()`. This
+might be passable for “trivial” APIs but if they are in use by the public, or used by mobile applications then this will
+quickly lead to inconsistent output. The Transformer is able to create a “barrier” between source data and output, so
+schema changes do not affect users
 
 The Transformer works also very well to put any kind of **database resultset**
 (e.g. from PDO) into a new data structure.
@@ -61,9 +59,8 @@ The uses cases are not limited.
 
 ## Transforming
 
-For the sake of simplicity, this example has been put together as though it was one file.
-In reality, you would spread the manager initiation, data collection and JSON conversion 
-into separate parts of your application.
+For the sake of simplicity, this example has been put together as though it was one file. In reality, you would spread
+the manager initiation, data collection and JSON conversion into separate parts of your application.
 
 Sample data:
 
@@ -239,7 +236,7 @@ Because `lastName` is blank but required the result looks like this:
 
 ## Filter
 
-Most filters are directly available as rule method.
+Most filters are directly available as method.
 
 ```php
 // Cast value to string, convert blank to null
@@ -375,7 +372,9 @@ $transformer->map('destination', 'source', $transformer->rule()->filter('sprintf
 
 You can also implement and register your own filter classes as well.
 
-## JSON conversion
+## Examples
+
+### JSON conversion
 
 You can use your own json component or just the native `json_encode` function.
 
@@ -394,6 +393,38 @@ $response = $response->withHeader('Content-Type', 'application/json');
 $response->getBody()->write($json);
 
 return $response;
+```
+
+### PDO resultset conversion
+
+```php
+use Selective\Transformer\ArrayTransformer;
+use PDO;
+
+$pdo = new PDO($dsn, $username, $password, $options);
+$statement = $pdo->query('SELECT id, username, first_name FROM users');
+$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+$transformer = new ArrayTransformer();
+
+$transformer->map('id', 'id', 'integer')
+    ->map('username', 'username', 'string|required')
+    ->map('first_name', 'first_name', 'string|required');
+    
+$result = $transformer->toArrays($rows);
+```
+
+The result:
+
+```php
+[
+    [
+        'id' => 1,
+        'username' => 'sally',
+        'first_name' => 'Sally',
+    ]  
+    // ... 
+];
 ```
 
 ## License
