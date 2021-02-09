@@ -15,9 +15,10 @@ responses and many other things.
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Introduction](#introduction)
-* [Transforming](#transforming)
-* [Transforming list of arrays](#transforming-list-of-arrays)
 * [Dot access](#dot-access)
+  * [Object access](#object-access)
+* [Transforming](#transforming)
+  * [Transforming list of arrays](#transforming-list-of-arrays)
 * [Mapping rules](#mapping-rules)
     * [Simple mapping rules](#simple-mapping-rules)
     * [Complex mapping rules](#complex-mapping-rules)
@@ -57,7 +58,57 @@ The Transformer works also very well to put any kind of **database resultset**
 
 The uses cases are not limited.
 
+## Dot access
+
+You can copy any data from the source array to any sub-element of the destination array using the dot-syntax.
+
+```php
+<?php
+
+$transformer->map('firstName', 'address.first_name')
+    ->map('lastName', 'address.last_name')
+    ->map('invoice.items', 'root.sub1.sub2.items');
+```
+
+### Object access
+
+It's possible to access the properties of an object using the dot notation.
+
+```php
+$transformer = new ArrayTransformer();
+
+$transformer->map('bar1', 'foo.bar', 'string')
+    ->map('bar2', 'foo.bar2.0', 'string')
+    ->map('sub.sub2.sub3', 'foo.bar2.1', 'string');
+
+$user = new stdClass();
+$user->foo = new stdClass();
+$user->foo->bar = 'Hello Bar';
+$user->foo->bar2 = [
+    0 => 'Test 0',
+    1 => 'Test 1',
+];
+
+$result = $transformer->toArray((array)$user);
+```
+
+The result:
+
+```php
+[
+    'bar1' => 'Hello Bar',
+    'bar2' => 'Test 0',
+    'sub' => [
+        'sub2' => [
+            'sub3' => 'Test 1',
+        ],
+    ],
+];
+```
+
 ## Transforming
+
+### Transforming arrays
 
 For the sake of simplicity, this example has been put together as though it was one file. In reality, you would spread
 the manager initiation, data collection and JSON conversion into separate parts of your application.
@@ -95,7 +146,7 @@ The result:
 ];
 ```
 
-## Transforming list of arrays
+### Transforming list of arrays
 
 The method `toArrays` is able to transform a list of arrays.
 
@@ -149,18 +200,6 @@ The result:
         'enabled' => false,
     ],
 ]
-```
-
-## Dot access
-
-You can copy any data from the source array to any sub-element of the destination array using the dot-syntax.
-
-```php
-<?php
-
-$transformer->map('firstName', 'address.first_name')
-    ->map('lastName', 'address.last_name')
-    ->map('invoice.items', 'root.sub1.sub2.items');
 ```
 
 ## Mapping Rules
