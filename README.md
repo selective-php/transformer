@@ -399,11 +399,11 @@ return $response;
 
 ```php
 use Selective\Transformer\ArrayTransformer;
-use PDO;
 
 $pdo = new PDO($dsn, $username, $password, $options);
+
 $statement = $pdo->query('SELECT id, username, first_name FROM users');
-$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+$rows = $statement->fetchAll();
 
 $transformer = new ArrayTransformer();
 
