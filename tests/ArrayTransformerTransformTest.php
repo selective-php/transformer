@@ -7,8 +7,10 @@ use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Selective\Transformer\ArrayTransformer;
+use Selective\Transformer\Exceptions\ArrayDataException;
 use Selective\Transformer\Exceptions\ArrayTransformerException;
 use Selective\Transformer\Filter\SprintfFilter;
+use stdClass;
 
 /**
  * Test.
@@ -269,5 +271,58 @@ class ArrayTransformerTransformTest extends TestCase
                 'field' => 'value',
             ]
         );
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testObject()
+    {
+        $transformer = new ArrayTransformer();
+
+        $transformer->map('bar1', 'foo.bar', 'string')
+            ->map('bar2', 'foo.bar2.0', 'string')
+            ->map('sub.sub2.sub3', 'foo.bar2.1', 'string');
+
+        $user = new stdClass();
+        $user->foo = new stdClass();
+        $user->foo->bar = 'Hello Bar';
+        $user->foo->bar2 = [
+            0 => 'Test 0',
+            1 => 'Test 1',
+        ];
+
+        $actual = $transformer->toArray((array)$user);
+
+        // Items is null because the source is empty and the source is required
+        $this->assertSame(
+            [
+                'bar1' => 'Hello Bar',
+                'bar2' => 'Test 0',
+                'sub' => [
+                    'sub2' => [
+                        'sub3' => 'Test 1',
+                    ],
+                ],
+            ],
+            $actual
+        );
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testEmptyKey()
+    {
+        $this->expectException(ArrayDataException::class);
+        $this->expectErrorMessage('Path cannot be an empty string');
+
+        $transformer = new ArrayTransformer();
+        $transformer->map('bar', '', 'string');
+        $transformer->toArray([]);
     }
 }

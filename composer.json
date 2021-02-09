@@ -16,8 +16,7 @@
     "homepage": "https://github.com/selective-php/transformer",
     "license": "MIT",
     "require": {
-        "php": "^7.2 || ^8.0",
-        "dflydev/dot-access-data": "^3.0"
+        "php": "^7.2 || ^8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",

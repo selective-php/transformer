@@ -2,7 +2,6 @@
 
 namespace Selective\Transformer;
 
-use Dflydev\DotAccessData\Data;
 use Selective\Transformer\Filter\ArrayFilter;
 use Selective\Transformer\Filter\BooleanFilter;
 use Selective\Transformer\Filter\CallbackFilter;
@@ -129,34 +128,6 @@ final class ArrayTransformer implements TransformerInterface
     }
 
     /**
-     * Transform array to array.
-     *
-     * @param array<mixed> $source The source
-     * @param array<mixed> $target The target (optional)
-     *
-     * @return array<mixed> The result
-     */
-    public function toArray(array $source, array $target = []): array
-    {
-        $sourceData = new Data($source);
-        $targetData = new Data($target);
-
-        foreach ($this->rules as $rule) {
-            $value = $sourceData->get($rule->getSource(), $rule->getDefault());
-            $value = $this->converter->convert($value, $rule);
-
-            if ($value === null && !$rule->isRequired()) {
-                // Skip item
-                continue;
-            }
-
-            $targetData->set($rule->getDestination(), $value);
-        }
-
-        return $targetData->export();
-    }
-
-    /**
      * Transform list of arrays to list of arrays.
      *
      * @param array<mixed> $source The source
@@ -171,5 +142,33 @@ final class ArrayTransformer implements TransformerInterface
         }
 
         return $target;
+    }
+
+    /**
+     * Transform array to array.
+     *
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
+     *
+     * @return array<mixed> The result
+     */
+    public function toArray(array $source, array $target = []): array
+    {
+        $sourceData = new ArrayData($source);
+        $targetData = new ArrayData($target);
+
+        foreach ($this->rules as $rule) {
+            $value = $sourceData->get($rule->getSource(), $rule->getDefault());
+            $value = $this->converter->convert($value, $rule);
+
+            if ($value === null && !$rule->isRequired()) {
+                // Skip item
+                continue;
+            }
+
+            $targetData->set($rule->getDestination(), $value);
+        }
+
+        return $targetData->all();
     }
 }
