@@ -51,7 +51,7 @@ This Transformer component provides functionality to map, cast and loop array va
 When building an API it is common for people to just grab stuff from the database and pass it to `json_encode()`. This
 might be passable for “trivial” APIs but if they are in use by the public, or used by mobile applications then this will
 quickly lead to inconsistent output. The Transformer is able to create a “barrier” between source data and output, so
-schema changes do not affect users
+schema changes do not affect users.
 
 The Transformer works also very well to put any kind of **database resultset**
 (e.g. from PDO) into a new data structure.
@@ -64,10 +64,15 @@ You can copy any data from the source array to any sub-element of the destinatio
 
 ```php
 <?php
+use Selective\Transformer\ArrayTransformer;
+
+$transformer = new ArrayTransformer();
 
 $transformer->map('firstName', 'address.first_name')
     ->map('lastName', 'address.last_name')
     ->map('invoice.items', 'root.sub1.sub2.items');
+
+// ...
 ```
 
 ### Object access
@@ -75,6 +80,8 @@ $transformer->map('firstName', 'address.first_name')
 It's possible to access the properties of an object using the dot notation.
 
 ```php
+use Selective\Transformer\ArrayTransformer;
+
 $transformer = new ArrayTransformer();
 
 $transformer->map('bar1', 'foo.bar', 'string')
