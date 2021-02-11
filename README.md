@@ -41,7 +41,7 @@ composer require selective/transformer
 
 ## Introduction
 
-This Transformer component provides functionality to map, cast and loop array values from one array to another array.
+This Transformer component provides functionality to map, cast and loop array values from an array or object to another array.
 
 Converting complex data with simple PHP works by using a lot of type casting, `if` conditions and looping through the
 data with `foreach()`. This leads to very high cyclomatic complexity and nesting depth, and thus poor "code rating".
