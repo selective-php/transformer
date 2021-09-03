@@ -95,7 +95,7 @@ final class ArrayTransformer implements TransformerInterface
     }
 
     /**
-     * Add mapping rule.
+     * Add mapping rule with default value only.
      *
      * @param string $destination The destination element
      * @param mixed $value The value
