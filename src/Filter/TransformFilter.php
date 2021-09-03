@@ -19,7 +19,7 @@ final class TransformFilter
      */
     public function __invoke(array $value, callable $callback)
     {
-        if (!$value) {
+        if (empty($value)) {
             // The item will be skipped if "required" is not set
             return null;
         }
