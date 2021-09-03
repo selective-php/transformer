@@ -334,6 +334,9 @@ $transformer->rule()->callback(
     }
 );
 
+// Set fixed value
+$transformer->set('bar.0.item', 'default-value');
+
 // Apply transformation to array item
 $transformer->rule()->transform(
     function (ArrayTransformer $transformer) {
