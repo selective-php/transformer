@@ -12,14 +12,14 @@ final class ArrayData
     /**
      * Internal representation of data data.
      *
-     * @var array<mixed>
+     * @var array
      */
     private $data;
 
     /**
      * The constructor.
      *
-     * @param array<mixed> $data The data
+     * @param array $data The data
      */
     public function __construct(array $data = [])
     {
@@ -62,10 +62,6 @@ final class ArrayData
      */
     private function keyToPathArray(string $path): array
     {
-        if ($path === '') {
-            throw new ArrayDataException('Path cannot be an empty string');
-        }
-
         return explode('.', $path);
     }
 
@@ -101,7 +97,7 @@ final class ArrayData
     /**
      * Get all values.
      *
-     * @return array<mixed> The values
+     * @return array The values
      */
     public function all(): array
     {

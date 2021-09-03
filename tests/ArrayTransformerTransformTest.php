@@ -7,7 +7,6 @@ use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Selective\Transformer\ArrayTransformer;
-use Selective\Transformer\Exceptions\ArrayDataException;
 use Selective\Transformer\Exceptions\ArrayTransformerException;
 use Selective\Transformer\Filter\SprintfFilter;
 use stdClass;
@@ -104,7 +103,7 @@ class ArrayTransformerTransformTest extends TestCase
             ->map('amount3', 'amount', $transformer->rule()->filter('sprintf', '%02.3f')->string())
             ->map('comment', 'comment', $transformer->rule()->filter('trim'))
             ->map('enabled', 'enabled', $transformer->rule()->boolean())
-            ->map('items', 'items', $transformer->rule()->array()->required()->default([]))
+            ->map('items', '', $transformer->rule()->array()->required()->default([]))
             ->map('from-sub2', 'sub1.sub2')
             ->map(
                 'custom1',
@@ -296,7 +295,7 @@ class ArrayTransformerTransformTest extends TestCase
 
         $actual = $transformer->toArray((array)$user);
 
-        // Items is null because the source is empty and the source is required
+        // Items are null because the source is empty and the source is required
         $this->assertSame(
             [
                 'bar1' => 'Hello Bar',
@@ -318,11 +317,39 @@ class ArrayTransformerTransformTest extends TestCase
      */
     public function testEmptyKey()
     {
-        $this->expectException(ArrayDataException::class);
-        $this->expectErrorMessage('Path cannot be an empty string');
-
         $transformer = new ArrayTransformer();
         $transformer->map('bar', '', 'string');
-        $transformer->toArray([]);
+        $actual = $transformer->toArray([]);
+
+        $this->assertSame([], $actual);
+    }
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testSetDefault()
+    {
+        $transformer = new ArrayTransformer();
+
+        $transformer->set('bar.0.item', 'default-value');
+
+        // The same
+        $transformer->map('bar.0.item2', '', $transformer->rule()->default('default-value2'));
+
+        $actual = $transformer->toArray([]);
+
+        $this->assertSame(
+            [
+                'bar' => [
+                    [
+                        'item' => 'default-value',
+                        'item2' => 'default-value2',
+                    ],
+                ],
+            ],
+            $actual
+        );
     }
 }

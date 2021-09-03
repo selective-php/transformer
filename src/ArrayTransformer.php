@@ -95,6 +95,21 @@ final class ArrayTransformer implements TransformerInterface
     }
 
     /**
+     * Add mapping rule.
+     *
+     * @param string $destination The destination element
+     * @param mixed $value The value
+     *
+     * @return $this The transformer
+     */
+    public function set(string $destination, $value): self
+    {
+        $this->rules[] = $this->rule()->destination($destination)->default($value);
+
+        return $this;
+    }
+
+    /**
      * Convert rule string to rule object.
      *
      * @param string $rules The rules, separated by '|'
@@ -130,10 +145,10 @@ final class ArrayTransformer implements TransformerInterface
     /**
      * Transform list of arrays to list of arrays.
      *
-     * @param array<mixed> $source The source
-     * @param array<mixed> $target The target (optional)
+     * @param array $source The source
+     * @param array $target The target (optional)
      *
-     * @return array<mixed> The result
+     * @return array The result
      */
     public function toArrays(array $source, array $target = []): array
     {
@@ -147,10 +162,10 @@ final class ArrayTransformer implements TransformerInterface
     /**
      * Transform array to array.
      *
-     * @param array<mixed> $source The source
-     * @param array<mixed> $target The target (optional)
+     * @param array $source The source
+     * @param array $target The target (optional)
      *
-     * @return array<mixed> The result
+     * @return array The result
      */
     public function toArray(array $source, array $target = []): array
     {
