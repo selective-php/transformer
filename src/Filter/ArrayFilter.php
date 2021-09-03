@@ -12,7 +12,7 @@ final class ArrayFilter
      *
      * @param mixed $value The value
      *
-     * @return array<mixed> The value
+     * @return array The value
      */
     public function __invoke($value)
     {
