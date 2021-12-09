@@ -1,2 +1,13 @@
 parameters:
-	checkMissingIterableValueType: false
+	reportUnmatchedIgnoredErrors: false
+	ignoreErrors:
+		- '#Parameter \#2 \$default of method Selective\\Transformer\\ArrayData::get\(\) expects null, mixed given.#'
+		- '#Parameter \#2 \$filter of method Selective\\Transformer\\ArrayTransformer::registerFilter\(\) expects callable\(\): mixed, object given.#'
+		- '#Parameter \#2 \$code of class Selective\\Transformer\\Exceptions\\ArrayTransformerException constructor expects int, mixed given.#'
+		- '#Parameter \#1 \$datetime of class DateTimeImmutable constructor expects string, mixed given.#'
+		- '#Parameter \#1 \$number of function number_format expects float, mixed given.#'
+		- '#Parameter \#1 \$source of method Selective\\Transformer\\ArrayTransformer::toArray\(\) expects array, mixed given.#'
+		- '#Parameter \#2 ...\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given.#'
+		- '#Parameter \#1 \$num of function number_format expects float, mixed given.#'
+		- "#Cannot cast mixed#"
+		- "#Cannot access offset#"
