@@ -46,7 +46,7 @@ final class ArrayValueConverter
      *
      * @param string $name The filter name
      * @param mixed $value The value for the filter
-     * @param array $parameters The filter arguments (optional)
+     * @param array<mixed> $parameters The filter arguments (optional)
      *
      * @return mixed The filter result
      */

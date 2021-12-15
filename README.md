@@ -31,7 +31,7 @@ responses and many other things.
 
 ## Requirements
 
-* PHP 7.2+ or 8.0+
+* PHP 7.4+ or 8.0+
 
 ## Installation
 

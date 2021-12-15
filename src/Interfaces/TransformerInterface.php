@@ -10,10 +10,10 @@ interface TransformerInterface
     /**
      * Transform array to array.
      *
-     * @param array $source The source
-     * @param array $target The target (optional)
+     * @param array<mixed> $source The source
+     * @param array<mixed> $target The target (optional)
      *
-     * @return array The result
+     * @return array<mixed> The result
      */
     public function toArray(array $source, array $target = []): array;
 }

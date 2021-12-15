@@ -12,10 +12,10 @@ final class TransformFilter
     /**
      * Invoke.
      *
-     * @param array $value The values
+     * @param array<mixed> $value The values
      * @param callable $callback The callback
      *
-     * @return array|null The value
+     * @return array<mixed>|null The value
      */
     public function __invoke(array $value, callable $callback)
     {

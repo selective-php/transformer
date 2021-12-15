@@ -12,14 +12,14 @@ final class ArrayData
     /**
      * Internal representation of data data.
      *
-     * @var array
+     * @var array<mixed>
      */
     private $data;
 
     /**
      * The constructor.
      *
-     * @param array $data The data
+     * @param array<mixed> $data The data
      */
     public function __construct(array $data = [])
     {
@@ -58,7 +58,7 @@ final class ArrayData
      *
      * @param string $path The path
      *
-     * @return string[] The key paths
+     * @return array<string> The key paths
      */
     private function keyToPathArray(string $path): array
     {
@@ -97,7 +97,7 @@ final class ArrayData
     /**
      * Get all values.
      *
-     * @return array The values
+     * @return array<mixed> The values
      */
     public function all(): array
     {
