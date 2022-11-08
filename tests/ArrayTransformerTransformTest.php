@@ -18,8 +18,6 @@ class ArrayTransformerTransformTest extends TestCase
 {
     /**
      * Test.
-     *
-     * @return void
      */
     public function testSimpleStringMapping(): void
     {
@@ -54,8 +52,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testComplexMapping(): void
     {
@@ -144,8 +140,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testDateTimeFilter(): void
     {
@@ -174,8 +168,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testDateTimeFilterAndTimeZone(): void
     {
@@ -207,8 +199,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testDateTimParserError(): void
     {
@@ -227,8 +217,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testDateTimeDateTimeZoneException(): void
     {
@@ -254,8 +242,6 @@ class ArrayTransformerTransformTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testUndefinedFilterException(): void
     {

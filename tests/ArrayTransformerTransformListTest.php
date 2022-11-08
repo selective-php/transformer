@@ -12,8 +12,6 @@ class ArrayTransformerTransformListTest extends TestCase
 {
     /**
      * Test.
-     *
-     * @return void
      */
     public function testToArrays(): void
     {
@@ -65,8 +63,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testToArraysWithStrings(): void
     {
@@ -119,8 +115,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testTransformWithListOfData(): void
     {
@@ -187,8 +181,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testTransformWithData(): void
     {
@@ -226,8 +218,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testTransformEmpty(): void
     {
@@ -255,8 +245,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testTransformListEmpty(): void
     {
@@ -284,8 +272,6 @@ class ArrayTransformerTransformListTest extends TestCase
 
     /**
      * Test.
-     *
-     * @return void
      */
     public function testTransformListEmptyButRequired(): void
     {

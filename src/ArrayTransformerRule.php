@@ -20,7 +20,7 @@ final class ArrayTransformerRule
     private $source = '';
 
     /**
-     * @var mixed
+     * @var mixed|null
      */
     private $default = null;
 

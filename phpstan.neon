@@ -1,4 +1,6 @@
 parameters:
+	level: 8
+	checkMissingIterableValueType: false
 	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
 		- '#Parameter \#2 \$default of method Selective\\Transformer\\ArrayData::get\(\) expects null, mixed given.#'
@@ -11,3 +13,7 @@ parameters:
 		- '#Parameter \#1 \$num of function number_format expects float, mixed given.#'
 		- "#Cannot cast mixed#"
 		- "#Cannot access offset#"
+		- "#Strict comparison using === between mixed and null will always evaluate to false#"
+	paths:
+		- src
+		- tests

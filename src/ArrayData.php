@@ -12,14 +12,14 @@ final class ArrayData
     /**
      * Internal representation of data data.
      *
-     * @var array<mixed>
+     * @var array
      */
     private $data;
 
     /**
      * The constructor.
      *
-     * @param array<mixed> $data The data
+     * @param array $data The data
      */
     public function __construct(array $data = [])
     {
@@ -33,8 +33,6 @@ final class ArrayData
      * @param mixed $value The value
      *
      * @throws ArrayDataException
-     *
-     * @return void
      */
     public function set(string $key, $value = null): void
     {
@@ -97,7 +95,7 @@ final class ArrayData
     /**
      * Get all values.
      *
-     * @return array<mixed> The values
+     * @return array The values
      */
     public function all(): array
     {
