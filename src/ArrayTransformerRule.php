@@ -34,6 +34,18 @@ final class ArrayTransformerRule
      */
     private $filters = [];
 
+    private ArrayTransformer $transformer;
+
+    /**
+     * The constructor.
+     *
+     * @param ArrayTransformer|null $transformer The parent transformer
+     */
+    public function __construct(ArrayTransformer $transformer = null)
+    {
+        $this->transformer = $transformer ?? new ArrayTransformer();
+    }
+
     /**
      * Add destination.
      *
@@ -255,7 +267,7 @@ final class ArrayTransformerRule
      */
     public function transform(callable $callback): self
     {
-        return $this->filter('transform', $callback, new ArrayTransformer());
+        return $this->filter('transform', $callback, $this->transformer);
     }
 
     /**

@@ -9,6 +9,18 @@ use Selective\Transformer\ArrayTransformer;
  */
 final class TransformFilter
 {
+    private ArrayTransformer $transformer;
+
+    /**
+     * The constructor.
+     *
+     * @param ArrayTransformer|null $transformer The parent transformer
+     */
+    public function __construct(ArrayTransformer $transformer = null)
+    {
+        $this->transformer = $transformer ?? new ArrayTransformer();
+    }
+
     /**
      * Invoke.
      *
@@ -24,9 +36,8 @@ final class TransformFilter
             return null;
         }
 
-        $transformer = new ArrayTransformer();
-        $callback($transformer);
+        $callback($this->transformer);
 
-        return $transformer->toArray($value);
+        return $this->transformer->toArray($value);
     }
 }

@@ -51,13 +51,15 @@ final class ArrayTransformer implements TransformerInterface
 
     /**
      * The constructor.
+     *
+     * @param ArrayTransformer|null $transformer The parent transformer
      */
-    public function __construct()
+    public function __construct(ArrayTransformer $transformer = null)
     {
         $this->converter = new ArrayValueConverter();
 
         foreach ($this->internalFilters as $name => $class) {
-            $this->registerFilter($name, new $class());
+            $this->registerFilter($name, new $class($transformer ?? $this));
         }
     }
 

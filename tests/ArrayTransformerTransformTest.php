@@ -338,4 +338,42 @@ class ArrayTransformerTransformTest extends TestCase
             $actual
         );
     }
+
+    /**
+     * Test.
+     */
+    public function testCallback(): void
+    {
+        $transformer = new ArrayTransformer();
+        $transformer->registerFilter('lower', 'strtolower');
+
+        $transformer->map(
+            'destination',
+            'source',
+            $transformer->rule()->transform(
+                function (ArrayTransformer $transformer) {
+                    $transformer->map('test1', 'xxx', 'integer')
+                        ->map('test2', 'yyy', 'lower');
+                }
+            )
+        );
+
+        $actual = $transformer->toArray(
+            [
+                'source' => [
+                    'xxx' => 123,
+                    'yyy' => 'ABC',
+                ],
+            ]
+        );
+
+        $expected = [
+            'destination' => [
+                'test1' => 123,
+                'test2' => 'abc',
+            ],
+        ];
+
+        $this->assertSame($expected, $actual);
+    }
 }
