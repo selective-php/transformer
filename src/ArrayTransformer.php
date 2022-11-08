@@ -23,17 +23,14 @@ final class ArrayTransformer implements TransformerInterface
     /**
      * @var ArrayTransformerRule[]
      */
-    private $rules;
+    private array $rules = [];
 
-    /**
-     * @var ArrayValueConverter
-     */
-    private $converter;
+    private ArrayValueConverter $converter;
 
     /**
      * @var string[]
      */
-    private $internalFilters = [
+    private array $internalFilters = [
         'string' => StringFilter::class,
         'string-with-blank' => StringWithBlankFilter::class,
         'boolean' => BooleanFilter::class,

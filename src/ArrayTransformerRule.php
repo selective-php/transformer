@@ -9,30 +9,21 @@ use DateTimeZone;
  */
 final class ArrayTransformerRule
 {
-    /**
-     * @var string
-     */
-    private $destination = '';
+    private string $destination = '';
 
-    /**
-     * @var string
-     */
-    private $source = '';
+    private string $source = '';
 
     /**
      * @var mixed|null
      */
     private $default = null;
 
-    /**
-     * @var bool
-     */
-    private $required = false;
+    private bool $required = false;
 
     /**
      * @var ArrayTransformerFilterItem[]
      */
-    private $filters = [];
+    private array $filters = [];
 
     private ArrayTransformer $transformer;
 

@@ -12,7 +12,7 @@ final class ArrayValueConverter
     /**
      * @var callable[]
      */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * Convert the values by the given filter rules.

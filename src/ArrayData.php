@@ -11,10 +11,8 @@ final class ArrayData
 {
     /**
      * Internal representation of data data.
-     *
-     * @var array
      */
-    private $data;
+    private array $data = [];
 
     /**
      * The constructor.

@@ -7,21 +7,15 @@ namespace Selective\Transformer;
  */
 final class ArrayTransformerFilterItem
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name = '';
 
-    /**
-     * @var array<mixed>
-     */
-    private $arguments;
+    private array $arguments = [];
 
     /**
      * The constructor.
      *
      * @param string $name The filter to apply
-     * @param array<mixed> $arguments The parameters for the filter
+     * @param array $arguments The parameters for the filter
      */
     public function __construct(string $name, array $arguments = [])
     {
@@ -42,7 +36,7 @@ final class ArrayTransformerFilterItem
     /**
      * Get filter parameters.
      *
-     * @return array<mixed> The params
+     * @return array The params
      */
     public function getArguments(): array
     {
