@@ -7,6 +7,6 @@ use RuntimeException;
 /**
  * Base runtime exception type thrown by this library.
  */
-class ArrayDataException extends RuntimeException
+final class ArrayDataException extends RuntimeException
 {
 }
