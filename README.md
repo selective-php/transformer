@@ -488,6 +488,10 @@ The result:
 ];
 ```
 
+## Similar packages
+
+* <https://github.com/selective-php/array-reader>
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
