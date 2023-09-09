@@ -203,7 +203,7 @@ class ArrayTransformerTransformTest extends TestCase
     public function testDateTimParserError(): void
     {
         $this->expectException(ArrayTransformerException::class);
-        $this->expectErrorMessageMatches('/Failed to parse time string/');
+        $this->expectExceptionMessageMatches('/Failed to parse time string/');
 
         $transformer = new ArrayTransformer();
         $transformer->map('date', 'date', $transformer->rule()->date('Y-m-d'));
@@ -221,7 +221,7 @@ class ArrayTransformerTransformTest extends TestCase
     public function testDateTimeDateTimeZoneException(): void
     {
         $this->expectException(ArrayTransformerException::class);
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             'Changing the DateTimeZone of an existing DateTimeImmutable object is not supported.'
         );
 
@@ -246,7 +246,7 @@ class ArrayTransformerTransformTest extends TestCase
     public function testUndefinedFilterException(): void
     {
         $this->expectException(ArrayTransformerException::class);
-        $this->expectErrorMessage('Filter not found: foo');
+        $this->expectExceptionMessage('Filter not found: foo');
 
         $transformer = new ArrayTransformer();
         $transformer->map('field', 'field', $transformer->rule()->filter('foo'));

@@ -19,10 +19,8 @@
 /phpunit.xml        export-ignore
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
-/.travis.*          export-ignore
 /.scrutinizer.*     export-ignore
 /.editorconfig      export-ignore
-/.coveralls.*       export-ignore
 
 # Define binary file attributes.
 # - Do not treat them as text.
