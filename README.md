@@ -16,9 +16,9 @@ responses and many other things.
 * [Installation](#installation)
 * [Introduction](#introduction)
 * [Dot access](#dot-access)
-  * [Object access](#object-access)
+    * [Object access](#object-access)
 * [Transforming](#transforming)
-  * [Transforming list of arrays](#transforming-list-of-arrays)
+    * [Transforming list of arrays](#transforming-list-of-arrays)
 * [Mapping rules](#mapping-rules)
     * [Simple mapping rules](#simple-mapping-rules)
     * [Complex mapping rules](#complex-mapping-rules)
@@ -420,12 +420,12 @@ $transformer->map(
 There are even more filter classes available that can be registered manually:
 
 ```php
-use Selective\Transformer\Filter;
+use Selective\Transformer\Filter\SprintfFilter;
 
 $transformer = new ArrayTransformer();
 
 // Convert the value using the sprintf function
-$transformer->registerFilter('sprintf', SprintfFilter::class);
+$transformer->registerFilter('sprintf', new SprintfFilter());
 
 // Usage
 $transformer->map('destination', 'source', $transformer->rule()->filter('sprintf', 'Count: %d'));
