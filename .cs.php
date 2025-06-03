@@ -19,7 +19,7 @@ return (new Config())
             'array_syntax' => ['syntax' => 'short'],
             'cast_spaces' => ['space' => 'none'],
             'concat_space' => ['spacing' => 'one'],
-            'compact_nullable_typehint' => true,
+            'compact_nullable_type_declaration' => true,
             'declare_equal_normalize' => ['space' => 'single'],
             'general_phpdoc_annotation_remove' => [
                 'annotations' => [
@@ -36,7 +36,11 @@ return (new Config())
             'phpdoc_order' => true, // psr-5
             'phpdoc_no_useless_inheritdoc' => false,
             'protected_to_private' => false,
-            'yoda_style' => false,
+            'yoda_style' => [
+                'equal' => false,
+                'identical' => false,
+                'less_and_greater' => false
+            ],
             'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
             'ordered_imports' => [
                 'sort_algorithm' => 'alpha',
