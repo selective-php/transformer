@@ -11,13 +11,15 @@ final class ArrayData
 {
     /**
      * Internal representation of data data.
+     * 
+     * @var array<mixed>
      */
     private array $data = [];
 
     /**
      * The constructor.
      *
-     * @param array $data The data
+     * @param array<mixed> $data The data
      */
     public function __construct(array $data = [])
     {
@@ -93,7 +95,7 @@ final class ArrayData
     /**
      * Get all values.
      *
-     * @return array The values
+     * @return array<mixed> The values
      */
     public function all(): array
     {
