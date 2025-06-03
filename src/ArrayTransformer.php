@@ -51,7 +51,7 @@ final class ArrayTransformer implements TransformerInterface
      *
      * @param ArrayTransformer|null $transformer The parent transformer
      */
-    public function __construct(ArrayTransformer $transformer = null)
+    public function __construct(?ArrayTransformer $transformer = null)
     {
         $this->converter = new ArrayValueConverter();
 

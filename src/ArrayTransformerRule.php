@@ -32,7 +32,7 @@ final class ArrayTransformerRule
      *
      * @param ArrayTransformer|null $transformer The parent transformer
      */
-    public function __construct(ArrayTransformer $transformer = null)
+    public function __construct(?ArrayTransformer $transformer = null)
     {
         $this->transformer = $transformer ?? new ArrayTransformer();
     }
@@ -222,7 +222,7 @@ final class ArrayTransformerRule
      *
      * @return $this Self
      */
-    public function date(string $format = 'Y-m-d H:i:s', DateTimeZone $dateTimeZone = null): self
+    public function date(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): self
     {
         return $this->filter('date', $format, $dateTimeZone);
     }

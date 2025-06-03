@@ -23,7 +23,7 @@ final class DateTimeFilter
      *
      * @return string The value
      */
-    public function __invoke($value, string $format = null, DateTimeZone $timezone = null)
+    public function __invoke($value, ?string $format = null, ?DateTimeZone $timezone = null)
     {
         try {
             $format = $format ?? 'Y-m-d H:i:s';
@@ -52,7 +52,7 @@ final class DateTimeFilter
     private function formatDateTime(
         DateTimeImmutable $value,
         string $format,
-        DateTimeZone $timezone = null
+        ?DateTimeZone $timezone = null
     ): string {
         if ($timezone) {
             // This would only with only work with UTC as default time zone.
