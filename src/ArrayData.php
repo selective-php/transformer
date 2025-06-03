@@ -11,7 +11,7 @@ final class ArrayData
 {
     /**
      * Internal representation of data data.
-     * 
+     *
      * @var array<mixed>
      */
     private array $data = [];

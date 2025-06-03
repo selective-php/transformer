@@ -21,7 +21,7 @@ final class NumberFormatFilter
         $value,
         int $decimals = 0,
         string $decimalSeparator = '.',
-        string $thousandsSeparator = ','
+        string $thousandsSeparator = ',',
     ) {
         return number_format($value, $decimals, $decimalSeparator, $thousandsSeparator);
     }
