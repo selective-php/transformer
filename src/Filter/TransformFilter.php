@@ -16,7 +16,7 @@ final class TransformFilter
      *
      * @param ArrayTransformer|null $transformer The parent transformer
      */
-    public function __construct(ArrayTransformer $transformer = null)
+    public function __construct(?ArrayTransformer $transformer = null)
     {
         $this->transformer = $transformer ?? new ArrayTransformer();
     }
