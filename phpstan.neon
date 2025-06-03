@@ -1,6 +1,5 @@
 parameters:
 	level: 8
-	checkMissingIterableValueType: false
 	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
 		- '#Parameter \#2 \$default of method Selective\\Transformer\\ArrayData::get\(\) expects null, mixed given.#'
