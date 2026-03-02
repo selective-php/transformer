@@ -39,12 +39,10 @@
     },
     "scripts": {
         "cs:check": [
-            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-            "php-cs-fixer fix --dry-run --format=txt --verbose --diff --config=.cs.php --ansi"
+            "php-cs-fixer fix --dry-run --format=txt --verbose --diff --config=.cs.php --ansi --allow-unsupported-php-version=yes"
         ],
         "cs:fix": [
-            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-            "php-cs-fixer fix --config=.cs.php --ansi --verbose"
+            "php-cs-fixer fix --config=.cs.php --ansi --verbose --allow-unsupported-php-version=yes"
         ],
         "sniffer:check": "phpcs --standard=phpcs.xml",
         "sniffer:fix": "phpcbf --standard=phpcs.xml",
